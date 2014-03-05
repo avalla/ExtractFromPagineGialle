@@ -10,7 +10,7 @@ using OfficeOpenXml;
 using ScrapySharp.Extensions;
 using System.Text.RegularExpressions;
 
-namespace PagineGialleAnalyzer
+namespace ExtractFromPagineGialle
 {
     class Program
     {
@@ -27,7 +27,6 @@ namespace PagineGialleAnalyzer
             var fileName = "estrazione_" + dove.Replace(" ", "_") + "_" + cosa.Replace(" ", "_") + ".xlsx";
             cosa = HttpUtility.HtmlEncode(cosa);
             dove = HttpUtility.HtmlEncode(dove);
-            var page = 1;
             var url = "http://www.paginegialle.it/pgol/4-" + cosa + "/3-" + dove + "/p-1?mr=50";
             var html = EstraiElementi(url);
 

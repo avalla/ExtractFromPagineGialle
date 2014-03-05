@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagineGialleAnalyzer", "PagineGialleAnalyzer\PagineGialleAnalyzer.csproj", "{992FB8D4-E248-45FD-93D5-EBD8F3867493}"
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Program", "Program\Program.csproj", "{992FB8D4-E248-45FD-93D5-EBD8F3867493}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

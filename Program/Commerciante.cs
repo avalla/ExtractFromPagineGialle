@@ -1,5 +1,4 @@
-﻿
-namespace PagineGialleAnalyzer
+﻿namespace ExtractFromPagineGialle
 {
     class Commerciante
     {

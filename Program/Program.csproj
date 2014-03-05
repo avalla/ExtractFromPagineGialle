@@ -7,8 +7,8 @@
     <ProjectGuid>{992FB8D4-E248-45FD-93D5-EBD8F3867493}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PagineGialleAnalyzer</RootNamespace>
-    <AssemblyName>PagineGialleAnalyzer</AssemblyName>
+    <RootNamespace>ExtractFromPagineGialle</RootNamespace>
+    <AssemblyName>ExtractFromPagineGialle</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -34,24 +34,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus">
-      <HintPath>..\packages\EPPlus.3.1.1\lib\net35\EPPlus.dll</HintPath>
+      <HintPath>..\packages\EPPlus.3.1.3.3\lib\net35\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\ScrapySharp.1.4.3\lib\FSharp.Core.dll</HintPath>
+      <HintPath>..\packages\ScrapySharp.2.2.63\lib\net40\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
-      <HintPath>..\packages\ScrapySharp.1.4.3\lib\HtmlAgilityPack.dll</HintPath>
+      <HintPath>..\packages\ScrapySharp.2.2.63\lib\net40\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="ScrapySharp">
-      <HintPath>..\packages\ScrapySharp.1.4.3\lib\ScrapySharp.dll</HintPath>
+      <HintPath>..\packages\ScrapySharp.2.2.63\lib\net40\ScrapySharp.dll</HintPath>
     </Reference>
     <Reference Include="ScrapySharp.Core">
-      <HintPath>..\packages\ScrapySharp.1.4.3\lib\ScrapySharp.Core.dll</HintPath>
+      <HintPath>..\packages\ScrapySharp.2.2.63\lib\net40\ScrapySharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
