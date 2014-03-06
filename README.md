@@ -9,7 +9,7 @@ Grab infos from Pagine Gialle
 Version
 ----
 
-1.0.0
+1.0.1
 
 Usage
 --------------

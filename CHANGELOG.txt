@@ -1,0 +1,6 @@
+1.0.1 06/03/2014
+- Excel with column names
+- Phone contact is working
+
+1.0.0
+First release
