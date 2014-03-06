@@ -33,7 +33,7 @@ namespace ExtractFromPagineGialle
             if (String.IsNullOrWhiteSpace(cosa)) cosa = HttpUtility.HtmlEncode("commercialista");
             if (String.IsNullOrWhiteSpace(dove)) dove = HttpUtility.HtmlEncode("10100");
             var fileName = "estrazione_" + dove.Replace(" ", "_") + "_" + cosa.Replace(" ", "_") + ".xlsx";
-            var url = String.Format("http://www.paginegialle.it/pgol/4-{0}/3-{1}", cosa, dove);
+            var url = String.Format("http://www.paginegialle.it/pgol/4-{0}/3-{1}/p-1?mr=50", cosa, dove);
             Console.WriteLine("\nUrl {0}", url);
             var htmlDocument = EstraiDocument(url);
             #if DEBUG
@@ -56,13 +56,13 @@ namespace ExtractFromPagineGialle
             var commercianti = new List<Commerciante>();
             for (var i = 1; i <= totalPages; i++)
             {
-                var urlToAnalyze = String.Format("http://www.paginegialle.it/pgol/4-{0}/3-{1}/p-{2}", cosa, dove, i);
+                var urlToAnalyze = String.Format("http://www.paginegialle.it/pgol/4-{0}/3-{1}/p-{2}?mr=50", cosa, dove, i);
                 Console.WriteLine("\nProcesso la pagina {0}", i.ToString(CultureInfo.InvariantCulture));
                 Console.WriteLine("\nUrl {0}", urlToAnalyze);
                 var htmlDocPage = EstraiDocument(urlToAnalyze);
-#if DEBUG
-                htmlDocPage.Save(String.Format("{0}\\{1}-{2}.html", OutputDir, cosa, i));
-#endif
+                #if DEBUG
+                    htmlDocPage.Save(String.Format("{0}\\{1}-{2}.html", OutputDir, cosa, i));
+                #endif
                 var htmlToAnalyze = htmlDocPage.DocumentNode;
                 var list = htmlToAnalyze.CssSelect("div.content.list-main div.list-left div div.item.clearfix");
                 Console.WriteLine("Trovati {0} elementi", list.Count().ToString(CultureInfo.InvariantCulture));
@@ -76,24 +76,34 @@ namespace ExtractFromPagineGialle
 
         }
 
-        private static MemoryStream GetPage(string url, bool useProxy)
+        private static HtmlDocument GetPage(string url, bool useProxy)
         {
-            var uri = new Uri(url);
-            var wc = new WebClient();
-            wc.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)");
-            wc.Headers.Add(HttpRequestHeader.Accept, "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-            wc.Headers.Add(HttpRequestHeader.Referer, "http://www.google.com");
-            if (useProxy) wc.Proxy  = new WebProxy(ProxyAddress, ProxyPort) { UseDefaultCredentials = true };
-            //request.Credentials = new NetworkCredential(Login, Pwd, Dominio);
-            return new MemoryStream(wc.DownloadData(uri));
+            var request = WebRequest.Create(url) as HttpWebRequest;
+            if (request == null) throw new Exception("Request null");
+            request.CookieContainer = new CookieContainer();
+            request.UserAgent = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36";
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+            request.Host = "www.paginegialle.it";
+            request.Referer = "http://www.google.com";
+            if (useProxy)
+            {
+                var wp = new WebProxy(ProxyAddress, ProxyPort) { UseDefaultCredentials = true };
+                request.Proxy = wp;
+                request.Credentials = new NetworkCredential(Login, Pwd, Dominio);
+            }
+            var response = request.GetResponse() as HttpWebResponse;
+            if (response == null) throw new Exception("Response null");
+            if (response.StatusCode != HttpStatusCode.OK) throw new Exception("Risposta != 200");
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.Load(response.GetResponseStream());
+            response.Close();
+            return htmlDoc;
         }
 
         private static HtmlDocument EstraiDocument(string url)
         {
             var data = GetPage(url, Proxy == "true");
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.Load(data);
-            return htmlDoc;
+            return data;
         }
 
         private static IEnumerable<Commerciante> EstraiInfo(IEnumerable<HtmlNode> list)
